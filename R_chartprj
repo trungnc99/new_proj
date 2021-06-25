@@ -1,0 +1,56 @@
+RawData = "✔✔✔✔✘✔✘✘✘✔✔✔✔✔✔✔✘✘✘✔✘✔✘✔✔✔✘✔✘✔✔✘✔✘✘✔✘✘✔✘✘✔✘✔✔✔✔✔✔✘✔✘✘✘✔✔✘✔✔✘✔✔✘✔✘✘✔✔✘✘✘✘✘✘✔✘✘✔✘✔✘✘✘✘✔✔✔✔✘✔✘✔✘✔✘✔✘✔✘✘✘✘✔✔✘✔✔✘✘✔✘✘✘✔✔✔✔✔✔✘✘✘✔✘✘✔✔✘✔✔✘✔✔✘✔✔✔✔✔✔✘✘✔✘✘✔✘✔✔✔✔✔✔✘✔✘✔✘✔✔✘✘✔✘✔✘✘✔✔✔✔✘✔✘✔✘✔✘✘✘✘✘✔✘✘✘✘✔✔✘✘✘✔✘✘✘✔✔✔✘✘✔✘✘✔✘✔✘✘✘✔✘✔✘✔✘✘✘✔✘✘✘✘✘✘✔✔✔✘✘✔✘✘✘✔✔✔✘✔✔✘✔✘✘✔✘✘✔✘✘✘✘✘✘✔✔✔✘✔✘✘✔✘✔✘✘✔✘✔✘✔✔✔✘✔✘✔✘✘✘✘✔✘✔✘✘✔✔✘✔✔✘✔✘✔✔✘✔✔✘✔✘✘✔✘✔✘✔✘✘✘✘✔✘✔✘✔✔✘✘✘✔✘✘✔✔✔✔✘✔✔✘✘✘✘✔✔✔✘✘✔✔✘✘✘✘✘✔✔✔✔✔✔✔✔✔✘✘✔✔✘✔✘✘✔✔✔✘✘✔✔✔✘✔✘✔✘✘✘✘✘✘✘✘✔✔✔✔✘✔✔✘✘✘✘✘✘✘✘✘✘✔✔✔✘✘✘✔✘✘✔✔✘✔✘✘✔✔✘✘✔✔✔✘✘✘✔✔✘✔✔✘✔✔✔✔✔✘✔✔✔✔✘✔✘✔✘✔✘✘✘✔✔✔✔✔✘✔✔✘✔✘✘✔✔✘✘✘✘✘✔✘✘✘✔✘✔✔✘✘✔✘✔✘✔✔✘✔✔✘✔✘✔✘✔✘✘✔✘✘✔✘✘✔✔✘✔✘✔✔✔✔✔✘✔✘✔✘✘✔✘✔✘✘✔✔✔✔✔✘✘✘✔✘✘✘✔✔✔✔✔✘✔✔✔✔✘✘✘✔"
+
+PureData = c(unlist(strsplit(RawData, "")))
+#PureData
+
+k = 0
+for (x in PureData)
+{
+	k = k + 1
+	if (x == "✔") PureData[k] = 1
+    if (x == "✘") PureData[k] = 0
+}
+PureData
+
+arrT = c()
+arrX = c()
+Diff = c()
+k = 0
+countT = 0
+countX = 0
+for (x in PureData)
+{
+	k = k + 1
+	if (x == 1)
+    	countT = countT + 1
+    else     
+    	countX = countX + 1
+    
+    arrT[k] = countT
+    arrX[k] = countX
+    Diff[k] = countT - countX
+}
+PureData
+arrT
+arrX
+Diff
+min(Diff)
+max(Diff)
+
+arrmax = c()
+arrmin = c()
+k = 0
+for (x in Diff)
+{	
+	k = k + 1
+    if (x < max(Diff)) arrmax[k] = max(Diff)
+    if (x > min(Diff)) arrmin[k] = min(Diff)
+}
+
+bitmap(file="out.png",width = 1800, height = 1800, units = "px")
+plot(arrT, main="My Graph", xlab= paste("Min Diff:", min(Diff),",Max Diff:", max(Diff)), type = "l", col = "green",yaxt="n", ylim=c(min(Diff) -2 ,countT))
+axis(2, at = seq(min(Diff) %/% 5 *5, countT, by = 5), las=2)
+lines(arrX, type="l", col = "red")
+lines(Diff, type="l", col = "blue")
+lines(arrmax, type="l", col = "black")
+lines(arrmin, type="l", col = "black")
