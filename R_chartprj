@@ -1,4 +1,4 @@
-RawData = "✘✘✔✔✔✘✔✘✔✘✔✔✘✔✘✔✔✔✘✔✘✘✘✔✘✔✘✔✔✔✔✘✔✘✘✘✔✘✔✘✔✘✔✘✔✘✘✘✘✘✘✔✔✔✘✘✘✘✘✔✘✔✘✔✘✔✔✘✔✔✔✘✔✔✔✔✔✘✔✘✔✔✔✘✔✔✔✔✔✔✔✔✔✔✔✘✘✔✘"
+RawData = "✘✘✔✔✔✘✔✘✔✘✔✔✘✔✘✔✔✔✘✔✘✘✘✔✘✔✘✔✔✔✔✘✔✘✘✘✔✘✔✘✔✘✔✘✔✘✘✘✘✘✘✔✔✔✘✘✘✘✘✔✘✔✘✔"
 
 PureData = c(unlist(strsplit(RawData, "")))
 arrT = c()
@@ -8,6 +8,7 @@ Diff = c()
 k = 0
 countT = 0
 countX = 0
+
 for (x in PureData)
 {
 	k = k + 1
@@ -18,12 +19,16 @@ for (x in PureData)
     arrX[k] = countX
     Diff[k] = countT - countX
 }
-
+time
 bitmap(file="out.png",width = 1900, height = 1900, units = "px")
-plot(arrT, main="My Graph", xlab= paste("Min Diff:", min(Diff),",Max Diff:",  max(Diff), ",Length:", length(PureData)), ylab = "Reps", type = "l", col = "green",yaxt="n", ylim=c(min(Diff) -2 ,countT))
+plot(arrT, main="My Graph", lwd = 1.5,
+xlab= paste("Min Diff:", min(Diff),",Max Diff:",  max(Diff), ",Length:", length(PureData)), 
+ylab = "Reps", type = "l", col = "blue",
+yaxt="n", ylim=c(min(Diff) -2 ,countT)
+)
 axis(2, at = seq(min(Diff) %/% 5 *5, countT, by = 5), las=2)
-lines(arrX, type="l", col = "red")
-lines(Diff, type="l", col = "blue")
+lines(arrX, type="l", lwd = 1.5,col = "red")
+lines(Diff, type="l", lwd = 2, col = "black")
 abline( h = max(Diff))
 abline( h = min(Diff))
-lines(rep(c(1), times = countT + countX), type="l", lty=2 , col = "black")
+lines(rep(c(0), times = countT + countX), type="l", lty=2 , col = "black")
